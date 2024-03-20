@@ -3,7 +3,7 @@ import time
 import unicodedata
 from datetime import datetime
 from bs4 import BeautifulSoup
-from lib.utils import ReadFile, save_to_json
+from lib.utils import save_to_json
 from lib.twitter_poast import TwitterPost
 
 class Scraper:
@@ -20,10 +20,8 @@ class Scraper:
 
         Args:
             url (str): URL dari pengikis Twitter.
-            path_file (str): Jalur ke berkas kata kunci.
         """
         self.url = url
-        self.keyword_file = ReadFile.read_keywords_from_file(path_file)
 
     def scrape_tweets(self, key):
         """

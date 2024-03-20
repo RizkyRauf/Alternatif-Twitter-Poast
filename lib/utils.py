@@ -24,6 +24,9 @@ def save_to_json(formatted_tweets, filename):
     if not os.path.exists(data_folder):
         os.makedirs(data_folder)
     
-    # Menyimpan formatted_tweets ke dalam berkas JSON
+    # Buat objek dictionary dengan key "tweets"
+    tweets_dict = {"tweets": formatted_tweets}
+    
+    # Menyimpan objek dictionary ke dalam berkas JSON
     with open(file_path, 'w') as f:
-        json.dump(formatted_tweets, f, indent=4)
+        json.dump(tweets_dict, f, indent=4)
