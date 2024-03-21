@@ -1,5 +1,6 @@
 
 import os
+import platform
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 
@@ -51,7 +52,16 @@ class TwitterPost:
             driver: Driver Selenium yang diinisialisasi.
         """
         try:
-            chrome_driver_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../driver/chromedriver.exe"))
+            # Cek sistem operasi pengguna
+            if platform.system() == 'Windows':
+                chrome_driver_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../driver/chromedriver.exe"))
+            elif platform.system() == 'Linux':
+                chrome_driver_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../driver/chromedriver"))
+            elif platform.system() == 'Darwin':
+                chrome_driver_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../driver/chromedriver"))
+            else:
+                raise Exception('Unsupported system')
+            
             options = self.configure_browser_options()
             service = ChromeService(executable_path=chrome_driver_path)
             driver = webdriver.Chrome(service=service, options=options)
