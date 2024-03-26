@@ -21,7 +21,11 @@ Pastikan Anda telah mengatur konfigurasi yang diperlukan sebelum menjalankan apl
 Untuk menjalankan aplikasi, jalankan main.py dengan menjalankan perintah berikut di terminal atau command prompt:
 
 ```
-python main.py
+python main.py --key "keyword" --start_date "YYYY-MM-DD" --end_date "YYYY-MM-DD"
+
+or you can use this command
+
+python main.py --key "keyword"
 ```
 
 Ikuti petunjuk yang muncul di layar untuk menggunakan aplikasi.
@@ -33,7 +37,6 @@ Ikuti petunjuk yang muncul di layar untuk menggunakan aplikasi.
 │   └── chromedriver.exe
 ├── lib
 │   ├── __init__.py
-│   ├── scraper.py
 │   ├── utils.py
 │   └── twitter_poast.py
 └── main.py

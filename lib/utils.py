@@ -1,32 +1,30 @@
-
 import re
 import json
 import os
+from typing import List
 
-def save_to_json(formatted_tweets, filename):
+def save_to_json(formatted_tweets: List[dict], filename: str) -> None:
     """
-    Menyimpan tweet yang diformat ke dalam berkas JSON di dalam folder 'data'.
-
+    Save formatted tweets to Json file in the 'data' folder.
+    
     Args:
-        formatted_tweets (list): Daftar kamus tweet yang diformat.
-        filename (str): Nama berkas JSON untuk disimpan.
+        formatted_tweets (list): List of dictionaries containing formatted tweets.
+        filename (str) : Name of the JSON file to be saved.
     """
-    # Mengonversi nama file ke dalam format yang benar
-    filename = re.sub(r'[^\w\s.-]', '_', filename)
-    
-    # Membuat path ke folder data
-    data_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data"))
-    
-    # Membuat path lengkap ke berkas JSON (tidak perlu karena nama file sudah termasuk tanggal)
-    file_path = os.path.join(data_folder, filename)
-    
-    # Membuat folder data jika belum ada
-    if not os.path.exists(data_folder):
-        os.makedirs(data_folder)
-    
-    # Buat objek dictionary dengan key "tweets"
-    tweets_dict = {"tweets": formatted_tweets}
-    
-    # Menyimpan objek dictionary ke dalam berkas JSON
-    with open(file_path, 'w') as f:
-        json.dump(tweets_dict, f, indent=4)
+    try:
+        filename = re.sub(r'[^\w\s.-]', '_', filename)
+        data_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data"))
+        file_path = os.path.join(data_folder, filename)
+        
+        if not os.path.exists(data_folder):
+            os.makedirs(data_folder)
+            
+        tweets_dict = {
+            "data" : formatted_tweets
+        }
+        
+        with open(file_path, 'w') as f:
+            json.dump(tweets_dict, f, indent=4)
+        print("Data saved successfully.")
+    except Exception as e:
+        print(f"Error saving data to JSON file: {e}")

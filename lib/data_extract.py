@@ -65,6 +65,7 @@ class DataExtract:
             attachments = tweet.find_all('div', class_='attachment image')
             for attachment in attachments:
                 image_url = attachment.find('a', class_='still-image')['href']
+                image_url = f"https://nitter.poast.org{image_url}"
                 image_urls.append(image_url)
                 
             video_urls = []
@@ -86,26 +87,31 @@ class DataExtract:
             if tweet_stat:
                 # Check if the 'icon-comment' element exists
                 comment_element = tweet_stat.select_one('.tweet-stat:nth-of-type(1) div.icon-container')
-                comment_count = comment_element.text.strip().replace(',', '') if comment_element else '0'
+                comment_count = int(comment_element.text.strip().replace(',', '')) if comment_element else 0
                 
                 # Check if the 'retweet' element exists
                 retweet_element = tweet_stat.select_one('.tweet-stat:nth-of-type(2) div.icon-container')
-                retweet_count = retweet_element.text.strip().replace(',', '') if retweet_element else '0'
+                retweet_count = int(retweet_element.text.strip().replace(',', '')) if retweet_element else 0
                 
                 # Check if the 'icon-quote' element exists
                 quote_element = tweet_stat.select_one('.tweet-stat:nth-of-type(3) div.icon-container')
-                quote_count = quote_element.text.strip().replace(',', '') if quote_element else '0'
+                quote_count = int(quote_element.text.strip().replace(',', '')) if quote_element else 0
                 
                 # Check if the 'icon-heart' element exists
                 heart_element = tweet_stat.select_one('.tweet-stat:nth-of-type(4) div.icon-container')
-                heart_count = heart_element.text.strip().replace(',', '') if heart_element else '0'
+                heart_count = int(heart_element.text.strip().replace(',', '')) if heart_element else 0
                 
                 stats = {
-                    'comments': int(comment_count),
-                    'retweets': int(retweet_count),
-                    'quotes': int(quote_count),
-                    'likes': int(heart_count)
+                    'comments': comment_count,
+                    'retweets': retweet_count,
+                    'quotes': quote_count,
+                    'likes': heart_count
                 }
             return stats
-        except:
-            return {}
+        except AttributeError:
+            return {
+                'comments': 0,
+                'retweets': 0,
+                'quotes': 0,
+                'likes': 0
+            }

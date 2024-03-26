@@ -1,2 +1,5 @@
-# Ignore list
+# Ignore pycache directory
 __pycache__/
+
+# Ignore JSON files
+*.json
