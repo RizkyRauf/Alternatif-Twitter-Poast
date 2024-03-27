@@ -87,31 +87,33 @@ class DataExtract:
             if tweet_stat:
                 # Check if the 'icon-comment' element exists
                 comment_element = tweet_stat.select_one('.tweet-stat:nth-of-type(1) div.icon-container')
-                comment_count = int(comment_element.text.strip().replace(',', '')) if comment_element else 0
+                comment_count = comment_element.text.strip().replace(',', '') if comment_element else '0'
                 
                 # Check if the 'retweet' element exists
                 retweet_element = tweet_stat.select_one('.tweet-stat:nth-of-type(2) div.icon-container')
-                retweet_count = int(retweet_element.text.strip().replace(',', '')) if retweet_element else 0
+                retweet_count = retweet_element.text.strip().replace(',', '') if retweet_element else '0'
                 
                 # Check if the 'icon-quote' element exists
                 quote_element = tweet_stat.select_one('.tweet-stat:nth-of-type(3) div.icon-container')
-                quote_count = int(quote_element.text.strip().replace(',', '')) if quote_element else 0
+                quote_count = quote_element.text.strip().replace(',', '') if quote_element else '0'
                 
                 # Check if the 'icon-heart' element exists
                 heart_element = tweet_stat.select_one('.tweet-stat:nth-of-type(4) div.icon-container')
-                heart_count = int(heart_element.text.strip().replace(',', '')) if heart_element else 0
+                heart_count = heart_element.text.strip().replace(',', '') if heart_element else '0'
+                
+                # Convert counts to integers
+                comment_count = int(comment_count) if comment_count else 0 
+                retweet_count = int(retweet_count) if retweet_count else 0 
+                quote_count = int(quote_count) if quote_count else 0 
+                heart_count = int(heart_count) if heart_count else 0
                 
                 stats = {
                     'comments': comment_count,
                     'retweets': retweet_count,
                     'quotes': quote_count,
                     'likes': heart_count
-                }
-            return stats
+                }                
+                return stats
         except AttributeError:
-            return {
-                'comments': 0,
-                'retweets': 0,
-                'quotes': 0,
-                'likes': 0
-            }
+            return {}
+                
