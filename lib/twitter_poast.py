@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 import json
 from lib.data_extract import DataExtract
 from lib.utils import save_to_json
+from lib.twitter_replay import TwitterReplay
 
 class TwitterPost:
     """
